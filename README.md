@@ -10,3 +10,5 @@ With the following code you get the list:
 ```c#
 itemList.list.whateverYouWant
 ```
+
+For more examples go to the testing file and see a implementation.
