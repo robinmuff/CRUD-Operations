@@ -12,6 +12,8 @@ namespace CRUD_Operations
             list = new ObservableCollection<O>();
 
             list.CollectionChanged += List_CollectionChanged;
+
+            readList();
         }
 
         public ObservableCollection<O> List

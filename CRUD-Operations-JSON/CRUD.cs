@@ -11,7 +11,6 @@ namespace CRUD_Operations_JSON
         public CRUD(string filepath)
         {
             this.filepath = filepath;
-            readList();
         }
 
         public override void readList()
