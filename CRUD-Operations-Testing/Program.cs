@@ -15,19 +15,19 @@ namespace CRUD_Operations_Testing
 
             printCurrentList("Initialized");
 
-            itemList.list.Add(new ItemClass("FirstTest", "FirstTestVal"));
+            itemList.List.Add(new ItemClass("FirstTest", "FirstTestVal"));
 
             printCurrentList("First added");
 
-            itemList.list.Add(new ItemClass("SecTest", "SecTestVal"));
+            itemList.List.Add(new ItemClass("SecTest", "SecTestVal"));
 
             printCurrentList("Second added");
 
-            itemList.list.RemoveAll(item => item.key.Contains("First"));
+            itemList.List.RemoveAt(0);
 
-            printCurrentList("First removed with match");
+            printCurrentList("First removed");
 
-            itemList.list.Clear();
+            itemList.List.Clear();
 
             printCurrentList("List cleared");
 
@@ -37,7 +37,7 @@ namespace CRUD_Operations_Testing
         static void printCurrentList(string messageBefore)
         {
             Console.WriteLine(messageBefore);
-            Console.WriteLine(JsonConvert.SerializeObject(itemList.list));
+            Console.WriteLine(JsonConvert.SerializeObject(itemList.List));
             Console.WriteLine();
         }
     }

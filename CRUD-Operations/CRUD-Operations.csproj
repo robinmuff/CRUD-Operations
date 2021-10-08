@@ -3,6 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>CRUD_Operations</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants />
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>

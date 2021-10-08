@@ -1,46 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 
 namespace CRUD_Operations
 {
     public class CRUD<O> where O : new()
     {
-        private string _filename;
-        private List<O> _list;
+        private string filename;
+        private ObservableCollection<O> list;
 
-        public CRUD(string piFilename)
+        public CRUD(string filename)
         {
-            _filename = piFilename;
+            this.filename = filename;
+
             readList();
+
+            list.CollectionChanged += List_CollectionChanged;
         }
-        public List<O> list
+
+        public ObservableCollection<O> List
         {
             get
             {
-                return _list;
+                return list;
             }
             set
             {
-                _list = value;
+                list = value;
                 safeList();
             }
+        }
+        private void List_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            safeList();
         }
 
         /* -- File Operations -- */
         private void safeList()
         {
-            File.WriteAllText(_filename, Newtonsoft.Json.JsonConvert.SerializeObject(list));
+            File.WriteAllText(filename, Newtonsoft.Json.JsonConvert.SerializeObject(list));
         }
         private void readList()
         {
-            if (File.Exists(_filename))
+            if (File.Exists(filename))
             {
-                list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<O>>(File.ReadAllText(_filename));
+                list = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<O>>(File.ReadAllText(filename));
             }
             else
             {
-                list = new List<O>();
+                list = new ObservableCollection<O>();
             }
         }
     }
