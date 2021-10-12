@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD-Operations", "CRUD-Ope
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD-Operations-Testing", "CRUD-Operations-Testing\CRUD-Operations-Testing.csproj", "{FB7EE0C3-D88B-44A2-A3C0-124895C4220F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD-Operations-JSON", "CRUD-Operations-JSON\CRUD-Operations-JSON.csproj", "{CF7675AA-20F6-42E5-BAD7-27613CB6EA07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD-Operations-JSON", "CRUD-Operations-JSON\CRUD-Operations-JSON.csproj", "{CF7675AA-20F6-42E5-BAD7-27613CB6EA07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
