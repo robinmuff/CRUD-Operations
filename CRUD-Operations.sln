@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD-Operations", "CRUD-Operations\CRUD-Operations.csproj", "{277F184B-13C6-468F-A127-302ECF9DAF04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD-Operations", "CRUD-Operations\CRUD-Operations.csproj", "{277F184B-13C6-468F-A127-302ECF9DAF04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD-Operations-Testing", "CRUD-Operations-Testing\CRUD-Operations-Testing.csproj", "{FB7EE0C3-D88B-44A2-A3C0-124895C4220F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD-Operations-Testing", "CRUD-Operations-Testing\CRUD-Operations-Testing.csproj", "{FB7EE0C3-D88B-44A2-A3C0-124895C4220F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD-Operations-JSON", "CRUD-Operations-JSON\CRUD-Operations-JSON.csproj", "{CF7675AA-20F6-42E5-BAD7-27613CB6EA07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{FB7EE0C3-D88B-44A2-A3C0-124895C4220F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB7EE0C3-D88B-44A2-A3C0-124895C4220F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB7EE0C3-D88B-44A2-A3C0-124895C4220F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF7675AA-20F6-42E5-BAD7-27613CB6EA07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF7675AA-20F6-42E5-BAD7-27613CB6EA07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF7675AA-20F6-42E5-BAD7-27613CB6EA07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF7675AA-20F6-42E5-BAD7-27613CB6EA07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>CRUD_Operations_Testing</RootNamespace>
+    <RootNamespace>CRUD_Operations_JSON</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CRUD-Operations-JSON\CRUD-Operations-JSON.csproj" />
+    <ProjectReference Include="..\CRUD-Operations\CRUD-Operations.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 ﻿using System;
-using CRUD_Operations;
+using CRUD_Operations_JSON;
 using Newtonsoft.Json;
 
 namespace CRUD_Operations_Testing
@@ -11,7 +11,7 @@ namespace CRUD_Operations_Testing
         {
             Console.WriteLine("--- Start testing ---");
 
-            itemList = new CRUD<ItemClass>("itemlist.json");
+            itemList = new CRUD<ItemClass>("test.json");
 
             printCurrentList("Initialized");
 
