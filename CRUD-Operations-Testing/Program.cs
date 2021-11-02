@@ -15,21 +15,23 @@ namespace CRUD_Operations_Testing
 
             printCurrentList("Initialized");
 
-            itemList.List.Add(new ItemClass("FirstTest", "FirstTestVal"));
+            itemList.Add(new ItemClass("FirstTest", "FirstTestVal"));
 
             printCurrentList("First added");
 
-            itemList.List.Add(new ItemClass("SecTest", "SecTestVal"));
+            itemList.Add(new ItemClass("SecTest", "SecTestVal"));
 
             printCurrentList("Second added");
 
-            itemList.List.RemoveAt(0);
+            itemList.RemoveAt(0);
 
             printCurrentList("First removed");
 
-            itemList.List.Clear();
+            itemList.Clear();
 
             printCurrentList("List cleared");
+
+            itemList.set(new System.Collections.Generic.List<ItemClass>());
 
             Console.WriteLine("--- End testing ---");
         }
@@ -37,7 +39,7 @@ namespace CRUD_Operations_Testing
         static void printCurrentList(string messageBefore)
         {
             Console.WriteLine(messageBefore);
-            Console.WriteLine(JsonConvert.SerializeObject(itemList.List));
+            Console.WriteLine(JsonConvert.SerializeObject(itemList.getList()));
             Console.WriteLine();
         }
     }
