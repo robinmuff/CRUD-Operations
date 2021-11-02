@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -11,18 +11,19 @@ namespace CRUD_Operations_JSON
         public CRUD(string filepath)
         {
             this.filepath = filepath;
+            readList();
         }
 
         public override void readList()
         {
             if (File.Exists(filepath))
             {
-                List = JsonConvert.DeserializeObject<ObservableCollection<O>>(File.ReadAllText(filepath));
+                set(JsonConvert.DeserializeObject<List<O>>(File.ReadAllText(filepath)));
             }
         }
         public override void safeList()
         {
-            File.WriteAllText(filepath, JsonConvert.SerializeObject(List));
+            File.WriteAllText(filepath, JsonConvert.SerializeObject(getList()));
         }
     }
 }
