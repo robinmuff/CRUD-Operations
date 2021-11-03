@@ -4,11 +4,12 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>CRUD_Operations_JSON</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>CRUD-Operations</PackageId>
-    <Authors>CRUD-Operations</Authors>
-    <Company>CRUD-Operations</Company>
-    <Product>CRUD-Operations</Product>
-    <Version>2.0.0</Version>
+    <PackageId>CRUD-Operations-JSON</PackageId>
+    <Authors>CRUD-Operations-JSON</Authors>
+    <Company>CRUD-Operations-JSON</Company>
+    <Product>CRUD-Operations-JSON</Product>
+    <Version>2.0.1</Version>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
