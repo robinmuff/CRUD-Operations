@@ -26,15 +26,14 @@ namespace JSON_CRUD
         }
 
         /* -- Save Operations -- */
-        public void readList()
+        private void readList()
         {
             if (File.Exists(filename))
             {
                 Set(JsonConvert.DeserializeObject<List<O>>(File.ReadAllText(filename)));
             }
         }
-
-        public void safeList()
+        private void safeList()
         {
             File.WriteAllText(filename, JsonConvert.SerializeObject(Get()));
         }
@@ -58,5 +57,11 @@ namespace JSON_CRUD
         public O GetO(int index) { return list[index]; }
         public override string ToString() { return list.ToString(); }
         public ObservableCollection<O> GetCollection() { return list; }
+
+        /* -- NOTIFICATIONS -- */
+        public void AddChangeListener(NotifyCollectionChangedEventHandler notifyCollectionChangedEventHandler)
+        {
+            list.CollectionChanged += notifyCollectionChangedEventHandler;
+        }
     }
 }
