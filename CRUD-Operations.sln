@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSON-CRUD", "JSON-CRUD\JSON-CRUD.csproj", "{629E594F-2B74-4670-A0FE-00EE1E50F483}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSON-CRUD-EXAMPLE", "JSON-CRUD-EXAMPLE\JSON-CRUD-EXAMPLE.csproj", "{D56CF9B2-3647-4B71-8250-83F8F0AD8FEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{629E594F-2B74-4670-A0FE-00EE1E50F483}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{629E594F-2B74-4670-A0FE-00EE1E50F483}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{629E594F-2B74-4670-A0FE-00EE1E50F483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D56CF9B2-3647-4B71-8250-83F8F0AD8FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D56CF9B2-3647-4B71-8250-83F8F0AD8FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D56CF9B2-3647-4B71-8250-83F8F0AD8FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D56CF9B2-3647-4B71-8250-83F8F0AD8FEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
