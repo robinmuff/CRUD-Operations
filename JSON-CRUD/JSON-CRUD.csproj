@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>JSON_CRUD_.NET5</RootNamespace>
-    <Description>https://github.com/robinmuff/CRUD-Operations</Description>
+    <Description>https://github.com/robinmuff/CRUD-Operations/blob/main/README.md</Description>
     <PackageProjectUrl>https://github.com/robinmuff/CRUD-Operations</PackageProjectUrl>
     <RepositoryUrl>https://github.com/robinmuff/CRUD-Operations</RepositoryUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
