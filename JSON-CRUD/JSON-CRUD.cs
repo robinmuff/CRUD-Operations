@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -47,7 +48,7 @@ namespace JSON_CRUD
         public bool Contains(O item) { return list.Contains(item); }
         public int Count() { return list.Count; }
         public bool Equals() { return list.Equals(list); }
-        public System.Collections.IEnumerator GetEnumerator() { return list.GetEnumerator(); }
+        public IEnumerator GetEnumerator() { return list.GetEnumerator(); }
         public override int GetHashCode() { return list.GetHashCode(); }
         public int IndexOf(O item) { return list.IndexOf(item); }
         public void Insert(int index, O item) { list.Insert(index, item); }
