@@ -47,6 +47,7 @@ namespace JSON_CRUD
         public void Clear() { list.Clear(); }
         public void CopyTo(O[] array, int index) { list.CopyTo(array, index); }
         public bool Contains(O item) { return list.Contains(item); }
+        public bool ContainsMultiple(List<O> items) { foreach (O item in items) { if (!list.Contains(item)) { return false; } } return true; }
         public int Count() { return list.Count; }
         public bool Equals() { return list.Equals(list); }
         public IEnumerator GetEnumerator() { return list.GetEnumerator(); }
