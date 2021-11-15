@@ -43,6 +43,7 @@ namespace JSON_CRUD
         public void Set(List<O> list) { this.list.Clear(); foreach (O item in list) { this.list.Add(item); } }
         public List<O> Get() { List<O> returnlist = new List<O>(); foreach (O item in list) { returnlist.Add(item); } return returnlist; }
         public void Add(O item) { list.Add(item); }
+        public void AddRange(List<O> items) { foreach (O item in items) { list.Add(item); } }
         public void Clear() { list.Clear(); }
         public void CopyTo(O[] array, int index) { list.CopyTo(array, index); }
         public bool Contains(O item) { return list.Contains(item); }
