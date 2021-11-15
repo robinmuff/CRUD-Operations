@@ -56,6 +56,7 @@ namespace JSON_CRUD
         public void Insert(int index, O item) { list.Insert(index, item); }
         public void Move(int oldIndex, int newIndex) { list.Move(oldIndex, newIndex); }
         public void Remove(O item) { list.Remove(item); }
+        public void RemoveMultiple(List<O> items) { foreach (O item in items) { list.Remove(item); } }
         public void RemoveAt(int index) { list.RemoveAt(index); }
         public O GetO(int index) { return list[index]; }
         public override string ToString() { return list.ToString(); }
