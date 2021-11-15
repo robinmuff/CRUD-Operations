@@ -60,6 +60,7 @@ namespace JSON_CRUD
         public void RemoveMultiple(List<O> items) { foreach (O item in items) { list.Remove(item); } }
         public void RemoveAt(int index) { list.RemoveAt(index); }
         public O GetO(int index) { return list[index]; }
+        public string ItemToString(O item) { return list[list.IndexOf(item)].ToString(); }
         public override string ToString() { return list.ToString(); }
         public ObservableCollection<O> GetCollection() { return list; }
 
