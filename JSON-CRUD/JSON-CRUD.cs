@@ -53,6 +53,7 @@ namespace JSON_CRUD
         public IEnumerator GetEnumerator() { return list.GetEnumerator(); }
         public override int GetHashCode() { return list.GetHashCode(); }
         public int IndexOf(O item) { return list.IndexOf(item); }
+        public List<int> IndexOfMultiple(List<O> items) { List<int> indexList = new List<int>(); foreach (O item in items) { indexList.Add(list.IndexOf(item)); } return indexList; }
         public void Insert(int index, O item) { list.Insert(index, item); }
         public void Move(int oldIndex, int newIndex) { list.Move(oldIndex, newIndex); }
         public void Remove(O item) { list.Remove(item); }
