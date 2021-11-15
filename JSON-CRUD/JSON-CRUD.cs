@@ -67,5 +67,12 @@ namespace JSON_CRUD
         {
             list.CollectionChanged += notifyCollectionChangedEventHandler;
         }
+        public void AddMultipleChangeListener(List<NotifyCollectionChangedEventHandler> notifyCollectionChangedEventHandlers)
+        {
+            foreach (NotifyCollectionChangedEventHandler notifyCollectionChangedEventHandler in notifyCollectionChangedEventHandlers)
+            {
+                list.CollectionChanged += notifyCollectionChangedEventHandler;
+            }
+        }
     }
 }
