@@ -76,5 +76,8 @@ namespace JSON_CRUD
                 list.CollectionChanged += notifyCollectionChangedEventHandler;
             }
         }
+
+        /* -- File -- */
+        public string GetFileName() { return filename; }
     }
 }
