@@ -17,7 +17,7 @@ jobs:
           time: '30s'
       - uses: oprypin/find-latest-tag@v1
         with:
-          repository: obinmuff/CRUD-Operations  # The repository to scan.
+          repository: robinmuff/CRUD-Operations  # The repository to scan.
           releases-only: false
         id: crud
       - name: Checkout code
