@@ -1,9 +1,10 @@
 name: Create Release
 
 on:
-  create:
-    tags:
-      - 'V*'
+  workflow_run:
+    workflows: [".NET"]
+    types:
+      - completed
 
 jobs:
   build:
