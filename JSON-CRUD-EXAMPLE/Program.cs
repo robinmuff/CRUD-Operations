@@ -10,6 +10,7 @@ namespace JSON_CRUD_EXAMPLE
     internal class Program
     {
         private static CRUD<Item> itemList;
+        private static CRUD<Item> cryptList;
         static void Main(string[] args)
         {
             /* Welcome Text */
@@ -46,12 +47,32 @@ namespace JSON_CRUD_EXAMPLE
             itemList.Clear();
             itemList.Add(itemMyName);
             itemList.Clear();
+
+            /* Crypt List */
+            cryptList = new CRUD<Item>("crypItems.json", new CryptAccess("Crypted", "8"));
+
+            /* Crypt List Edit */
+            cryptList.Add(itemMyName);
+            printCryptList();
+            cryptList.Add(itemSourceCode);
+            printCryptList();
+            cryptList.Clear();
+            printCryptList();
+
+
+            Console.Read();
         }
 
         static void printList()
         {
             Console.WriteLine("--> PRINT <--");
             Console.WriteLine(JsonConvert.SerializeObject(itemList.Get()));
+            Console.WriteLine("-------------");
+        }
+        static void printCryptList()
+        {
+            Console.WriteLine("--> PRINT <--");
+            Console.WriteLine(JsonConvert.SerializeObject(cryptList.Get()));
             Console.WriteLine("-------------");
         }
 

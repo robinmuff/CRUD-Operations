@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace JSON_CRUD
 {
@@ -11,11 +14,13 @@ namespace JSON_CRUD
     {
         private ObservableCollection<O> list;
         private string filename;
+        private CryptAccess cryptAccess;
 
-        public CRUD(string filename)
+        public CRUD(string filename, CryptAccess cryptAccess = null)
         {
             this.list = new ObservableCollection<O>();
             this.filename = filename;
+            this.cryptAccess = cryptAccess;
 
             list.CollectionChanged += List_CollectionChanged;
 
@@ -31,12 +36,22 @@ namespace JSON_CRUD
         {
             if (File.Exists(filename))
             {
-                Set(JsonConvert.DeserializeObject<List<O>>(File.ReadAllText(filename)));
+                string fileContent = File.ReadAllText(filename);
+                if (cryptAccess != null) { fileContent = DecryptBytes(File.ReadAllBytes(filename)); }
+                Set(JsonConvert.DeserializeObject<List<O>>(fileContent));
             }
         }
         private void safeList()
         {
-            File.WriteAllText(filename, JsonConvert.SerializeObject(Get()));
+            string fileContent = JsonConvert.SerializeObject(Get());
+            if (cryptAccess != null)
+            {
+                File.WriteAllBytes(filename, EncryptBytes(Encoding.ASCII.GetBytes(fileContent)));
+            }
+            else
+            {
+                File.WriteAllText(filename, JsonConvert.SerializeObject(Get()));
+            }
         }
 
         /* -- List Operations -- */
@@ -79,5 +94,69 @@ namespace JSON_CRUD
 
         /* -- File -- */
         public string GetFileName() { return filename; }
+
+        /* -- Encrypt | Decrypt -- */
+        public byte[] EncryptBytes(byte[] inputBytes)
+        {
+            RijndaelManaged RijndaelCipher = new RijndaelManaged();
+
+            RijndaelCipher.Mode = CipherMode.CBC;
+            byte[] salt = Encoding.ASCII.GetBytes(cryptAccess.saltRounds);
+            PasswordDeriveBytes password = new PasswordDeriveBytes(cryptAccess.password, salt, "SHA1", 2);
+
+            ICryptoTransform Encryptor = RijndaelCipher.CreateEncryptor(password.GetBytes(32), password.GetBytes(16));
+
+            MemoryStream memoryStream = new MemoryStream();
+            CryptoStream cryptoStream = new CryptoStream(memoryStream, Encryptor, CryptoStreamMode.Write);
+            cryptoStream.Write(inputBytes, 0, inputBytes.Length);
+            cryptoStream.FlushFinalBlock();
+            byte[] CipherBytes = memoryStream.ToArray();
+
+            memoryStream.Close();
+            cryptoStream.Close();
+
+            Encoding unicode = Encoding.Unicode;
+            byte[] validationCode = unicode.GetBytes("1234567890");
+
+            return CipherBytes.Concat(validationCode).ToArray();
+        }
+        public string DecryptBytes(byte[] encryptedBytes)
+        {
+            encryptedBytes = encryptedBytes.Take(encryptedBytes.Count() - 20).ToArray();
+
+            string azurekey = "";
+            RijndaelManaged RijndaelCipher = new RijndaelManaged();
+
+            RijndaelCipher.Mode = CipherMode.CBC;
+            byte[] salt = Encoding.ASCII.GetBytes(cryptAccess.saltRounds);
+            PasswordDeriveBytes password = new PasswordDeriveBytes(cryptAccess.password, salt, "SHA1", 2);
+
+            ICryptoTransform Decryptor = RijndaelCipher.CreateDecryptor(password.GetBytes(32), password.GetBytes(16));
+
+            MemoryStream memoryStream = new MemoryStream(encryptedBytes);
+            CryptoStream cryptoStream = new CryptoStream(memoryStream, Decryptor, CryptoStreamMode.Read);
+            byte[] plainBytes = new byte[encryptedBytes.Length];
+
+            try
+            {
+                int DecryptedCount = cryptoStream.Read(plainBytes, 0, plainBytes.Length);
+            }
+            catch { }
+
+            memoryStream.Close();
+            cryptoStream.Close();
+
+            List<byte> finall = new List<byte>();
+            for (int i = 0; i < plainBytes.Length; i++)
+            {
+                if (plainBytes[i] != 0)
+                {
+                    finall.Add(plainBytes[i]);
+                }
+            }
+            byte[] array = finall.ToArray();
+            azurekey = Encoding.ASCII.GetString(array);
+            return azurekey;
+        }
     }
 }
