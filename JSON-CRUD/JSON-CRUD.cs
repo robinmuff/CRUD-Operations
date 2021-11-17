@@ -12,10 +12,12 @@ namespace JSON_CRUD
 {
     public class CRUD<O> where O : new()
     {
+        /* -- Global Vars -- */
         private ObservableCollection<O> list;
-        private string filename;
         private CryptAccess cryptAccess;
+        public string filename { get; }
 
+        /* -- Contructor -- */
         public CRUD(string filename, CryptAccess cryptAccess = null)
         {
             this.list = new ObservableCollection<O>();
@@ -26,12 +28,8 @@ namespace JSON_CRUD
 
             readList();
         }
-        private void List_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            safeList();
-        }
 
-        /* -- Save Operations -- */
+        /* -- File Operations -- */
         private void readList()
         {
             if (File.Exists(filename))
@@ -52,6 +50,12 @@ namespace JSON_CRUD
             {
                 File.WriteAllText(filename, fileContent);
             }
+        }
+
+        /* -- List Collection Changed -- */
+        private void List_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            safeList();
         }
 
         /* -- List Operations -- */
@@ -79,7 +83,7 @@ namespace JSON_CRUD
         public override string ToString() { return list.ToString(); }
         public ObservableCollection<O> GetCollection() { return list; }
 
-        /* -- NOTIFICATIONS -- */
+        /* -- Notifications -- */
         public void AddChangeListener(NotifyCollectionChangedEventHandler notifyCollectionChangedEventHandler)
         {
             list.CollectionChanged += notifyCollectionChangedEventHandler;
@@ -91,9 +95,6 @@ namespace JSON_CRUD
                 list.CollectionChanged += notifyCollectionChangedEventHandler;
             }
         }
-
-        /* -- File -- */
-        public string GetFileName() { return filename; }
 
         /* -- Encrypt | Decrypt -- */
         public byte[] EncryptBytes(byte[] inputBytes)
