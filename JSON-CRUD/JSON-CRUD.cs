@@ -50,13 +50,13 @@ namespace JSON_CRUD
             }
             else
             {
-                File.WriteAllText(filename, JsonConvert.SerializeObject(Get()));
+                File.WriteAllText(filename, fileContent);
             }
         }
 
         /* -- List Operations -- */
-        public void Set(List<O> list) { this.list.Clear(); foreach (O item in list) { this.list.Add(item); } }
-        public List<O> Get() { List<O> returnlist = new List<O>(); foreach (O item in list) { returnlist.Add(item); } return returnlist; }
+        public void Set(List<O> list) { this.list = new ObservableCollection<O>(list); }
+        public List<O> Get() { return new List<O>(this.list); }
         public void Add(O item) { list.Add(item); }
         public void AddRange(List<O> items) { foreach (O item in items) { list.Add(item); } }
         public void Clear() { list.Clear(); }
