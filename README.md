@@ -5,6 +5,8 @@
 [![Workflow passes (JSON-CRUD)](https://img.shields.io/github/workflow/status/robinmuff/CRUD-Operations/.NET?style=flat-square)](https://github.com/robinmuff/CRUD-Operations)
 [![Last release date (JSON-CRUD)](https://img.shields.io/github/release-date/robinmuff/CRUD-Operations?style=flat-square)](https://github.com/robinmuff/CRUD-Operations)
 
+[![Support the dev](https://img.shields.io/badge/Support%20the%20dev-paypal.me%2Frobinmuff-green)](https://paypal.me/robinmuff)
+
 ## What it is
 This NuGet-Package supports all List functions with the additional function to instantly save new data into a JSON File. In the [FILE](JSON-CRUD-EXAMPLE/Program.cs) is a example of how you can use the commands. If you need LINQ use the Get() and Set() Function where you have full LINQ support because its a normal List. If you are missing a feature, please create an issue.
 
