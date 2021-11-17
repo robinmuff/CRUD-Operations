@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,10 +21,12 @@ namespace JSON_CRUD
         /* -- Contructor -- */
         public CRUD(string filename, CryptAccess cryptAccess = null)
         {
-            list = new ObservableCollection<O>();
+            checkFilename(filename);
             this.filename = filename;
+
             this.cryptAccess = cryptAccess;
 
+            list = new ObservableCollection<O>();
             list.CollectionChanged += List_CollectionChanged;
 
             readList();
@@ -49,6 +52,15 @@ namespace JSON_CRUD
             else
             {
                 File.WriteAllText(filename, fileContent);
+            }
+        }
+        private void checkFilename(string filename)
+        {
+            int lastIndex = filename.LastIndexOf('/');
+
+            if (lastIndex != -1 && !Directory.Exists(filename.Substring(0, lastIndex)))
+            {
+                throw new System.Exception("Filename isn't valid, check that the directory exist (File doesn't have to exist");
             }
         }
 
@@ -102,7 +114,7 @@ namespace JSON_CRUD
             RijndaelManaged RijndaelCipher = new RijndaelManaged();
 
             RijndaelCipher.Mode = CipherMode.CBC;
-            byte[] salt = Encoding.ASCII.GetBytes(cryptAccess.saltRounds);
+            byte[] salt = Encoding.ASCII.GetBytes(cryptAccess.saltRounds.ToString());
             PasswordDeriveBytes password = new PasswordDeriveBytes(cryptAccess.password, salt, "SHA1", 2);
 
             ICryptoTransform Encryptor = RijndaelCipher.CreateEncryptor(password.GetBytes(32), password.GetBytes(16));
@@ -129,7 +141,7 @@ namespace JSON_CRUD
             RijndaelManaged RijndaelCipher = new RijndaelManaged();
 
             RijndaelCipher.Mode = CipherMode.CBC;
-            byte[] salt = Encoding.ASCII.GetBytes(cryptAccess.saltRounds);
+            byte[] salt = Encoding.ASCII.GetBytes(cryptAccess.saltRounds.ToString());
             PasswordDeriveBytes password = new PasswordDeriveBytes(cryptAccess.password, salt, "SHA1", 2);
 
             ICryptoTransform Decryptor = RijndaelCipher.CreateDecryptor(password.GetBytes(32), password.GetBytes(16));

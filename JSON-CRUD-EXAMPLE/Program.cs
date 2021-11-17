@@ -49,7 +49,7 @@ namespace JSON_CRUD_EXAMPLE
             itemList.Clear();
 
             /* Crypt List */
-            cryptList = new CRUD<Item>("crypItems.json", new CryptAccess("Crypted", "8"));
+            cryptList = new CRUD<Item>("crypItems.json", new CryptAccess("Crypted", 8));
 
             /* Crypt List Edit */
             cryptList.Add(itemMyName);

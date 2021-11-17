@@ -2,13 +2,13 @@
 {
     public class CryptAccess
     {
-        public CryptAccess(string password, string saltRounds)
+        public CryptAccess(string password, int saltRounds)
         {
             this.password = password;
             this.saltRounds = saltRounds;
         }
 
         public string password { get; }
-        public string saltRounds { get; }
+        public int saltRounds { get; }
     }
 }
