@@ -71,7 +71,7 @@ namespace JSON_CRUD
         }
 
         /* -- List Operations -- */
-        public void Set(List<O> list) { this.list = new ObservableCollection<O>(list); }
+        public void Set(List<O> list) { this.list = new ObservableCollection<O>(list); safeList(); }
         public List<O> Get() { return new List<O>(list); }
         public void Add(O item) { list.Add(item); }
         public void AddRange(List<O> items) { foreach (O item in items) { list.Add(item); } }
