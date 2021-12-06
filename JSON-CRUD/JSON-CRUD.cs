@@ -25,6 +25,7 @@ namespace JSON_CRUD
             checkFilename(filename);
             this.filename = filename;
             this.fileSystemWatcher = new FileSystemWatcher();
+            this.fileSystemWatcher.Path = "/";
             this.fileSystemWatcher.Changed += updater;
             this.fileSystemWatcher.Renamed += updater;
             this.fileSystemWatcher.Deleted += updater;
@@ -34,7 +35,6 @@ namespace JSON_CRUD
             this.cryptAccess = cryptAccess;
 
             list = new ObservableCollection<O>();
-            list.CollectionChanged += List_CollectionChanged;
 
             readList();
         }
@@ -73,19 +73,13 @@ namespace JSON_CRUD
             }
         }
 
-        /* -- List Collection Changed -- */
-        private void List_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            safeList();
-        }
-
         /* -- List Operations -- */
         public void Set(List<O> list) { this.list = new ObservableCollection<O>(list); safeList(); }
         public List<O> Get() { return new List<O>(list); }
-        public void Add(O item) { list.Add(item); }
-        public void AddRange(List<O> items) { foreach (O item in items) { list.Add(item); } }
-        public void Clear() { list.Clear(); }
-        public void CopyTo(O[] array, int index) { list.CopyTo(array, index); }
+        public void Add(O item) { list.Add(item); safeList(); }
+        public void AddRange(List<O> items) { foreach (O item in items) { list.Add(item); } safeList(); }
+        public void Clear() { list.Clear(); safeList(); }
+        public void CopyTo(O[] array, int index) { list.CopyTo(array, index); safeList(); }
         public bool Contains(O item) { return list.Contains(item); }
         public bool ContainsMultiple(List<O> items) { foreach (O item in items) { if (!list.Contains(item)) { return false; } } return true; }
         public int Count() { return list.Count; }
@@ -94,11 +88,11 @@ namespace JSON_CRUD
         public override int GetHashCode() { return list.GetHashCode(); }
         public int IndexOf(O item) { return list.IndexOf(item); }
         public List<int> IndexOfMultiple(List<O> items) { List<int> indexList = new List<int>(); foreach (O item in items) { indexList.Add(list.IndexOf(item)); } return indexList; }
-        public void Insert(int index, O item) { list.Insert(index, item); }
-        public void Move(int oldIndex, int newIndex) { list.Move(oldIndex, newIndex); }
-        public void Remove(O item) { list.Remove(item); }
-        public void RemoveMultiple(List<O> items) { foreach (O item in items) { list.Remove(item); } }
-        public void RemoveAt(int index) { list.RemoveAt(index); }
+        public void Insert(int index, O item) { list.Insert(index, item); safeList(); }
+        public void Move(int oldIndex, int newIndex) { list.Move(oldIndex, newIndex); safeList(); }
+        public void Remove(O item) { list.Remove(item); safeList(); }
+        public void RemoveMultiple(List<O> items) { foreach (O item in items) { list.Remove(item); } safeList(); }
+        public void RemoveAt(int index) { list.RemoveAt(index); safeList(); }
         public O GetO(int index) { return list[index]; }
         public string ItemToString(O item) { return list[list.IndexOf(item)].ToString(); }
         public override string ToString() { return list.ToString(); }
