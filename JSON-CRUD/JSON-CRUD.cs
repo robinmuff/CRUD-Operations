@@ -49,7 +49,7 @@ namespace JSON_CRUD
         }
 
         /* -- File Operations -- */
-        private void readList()
+        public void readList()
         {
             if (File.Exists(filename))
             {
