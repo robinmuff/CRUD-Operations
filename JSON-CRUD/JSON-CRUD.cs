@@ -24,7 +24,16 @@ namespace JSON_CRUD
         {
             checkFilename(filename);
             this.filename = filename;
+
             this.fileSystemWatcher = new FileSystemWatcher();
+            fileSystemWatcher.NotifyFilter = NotifyFilters.Attributes
+                                 | NotifyFilters.CreationTime
+                                 | NotifyFilters.DirectoryName
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.Security
+                                 | NotifyFilters.Size;
             this.fileSystemWatcher.Path = "/";
             this.fileSystemWatcher.Changed += updater;
             this.fileSystemWatcher.Renamed += updater;
