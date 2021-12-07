@@ -14,28 +14,15 @@ namespace JSON_CRUD
     public class CRUD<O> where O : new()
     {
         /* -- Global Vars -- */
-        private FileSystemWatcher fileSystemWatcher;
         private ObservableCollection<O> list;
         private CryptAccess cryptAccess;
         public string filename { get; }
 
         /* -- Contructor -- */
-        public CRUD(string filename, CryptAccess cryptAccess = null, bool useFileWatcher = false)
+        public CRUD(string filename, CryptAccess cryptAccess = null)
         {
             checkFilename(filename);
             this.filename = filename;
-
-            if (useFileWatcher)
-            {
-                this.fileSystemWatcher = new FileSystemWatcher();
-                this.fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite;
-                this.fileSystemWatcher.Path = "/";
-                this.fileSystemWatcher.Changed += updater;
-                this.fileSystemWatcher.Renamed += updater;
-                this.fileSystemWatcher.Deleted += updater;
-                this.fileSystemWatcher.Created += updater;
-                this.fileSystemWatcher.EnableRaisingEvents = true;
-            }
 
             this.cryptAccess = cryptAccess;
 
@@ -192,12 +179,6 @@ namespace JSON_CRUD
             byte[] array = finall.ToArray();
             azurekey = Encoding.ASCII.GetString(array);
             return azurekey;
-        }
-
-        /* -- FileSystemWatcher -- */
-        private void updater(object sender, FileSystemEventArgs e)
-        {
-            readList();
         }
     }
 }
