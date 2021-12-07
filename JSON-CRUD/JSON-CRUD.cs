@@ -57,7 +57,6 @@ namespace JSON_CRUD
         }
         private void safeList()
         {
-            this.fileSystemWatcher.EnableRaisingEvents = false;
             string fileContent = JsonConvert.SerializeObject(Get());
             if (cryptAccess != null)
             {
@@ -67,7 +66,6 @@ namespace JSON_CRUD
             {
                 File.WriteAllText(filename, fileContent);
             }
-            this.fileSystemWatcher.EnableRaisingEvents = true;
         }
         private void checkFilename(string filename)
         {
