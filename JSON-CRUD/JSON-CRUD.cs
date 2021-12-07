@@ -20,26 +20,22 @@ namespace JSON_CRUD
         public string filename { get; }
 
         /* -- Contructor -- */
-        public CRUD(string filename, CryptAccess cryptAccess = null)
+        public CRUD(string filename, CryptAccess cryptAccess = null, bool useFileWatcher = false)
         {
             checkFilename(filename);
             this.filename = filename;
 
-            this.fileSystemWatcher = new FileSystemWatcher();
-            fileSystemWatcher.NotifyFilter = NotifyFilters.Attributes
-                                 | NotifyFilters.CreationTime
-                                 | NotifyFilters.DirectoryName
-                                 | NotifyFilters.FileName
-                                 | NotifyFilters.LastAccess
-                                 | NotifyFilters.LastWrite
-                                 | NotifyFilters.Security
-                                 | NotifyFilters.Size;
-            this.fileSystemWatcher.Path = "/";
-            this.fileSystemWatcher.Changed += updater;
-            this.fileSystemWatcher.Renamed += updater;
-            this.fileSystemWatcher.Deleted += updater;
-            this.fileSystemWatcher.Created += updater;
-            this.fileSystemWatcher.EnableRaisingEvents = true;
+            if (useFileWatcher)
+            {
+                this.fileSystemWatcher = new FileSystemWatcher();
+                this.fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite;
+                this.fileSystemWatcher.Path = "/";
+                this.fileSystemWatcher.Changed += updater;
+                this.fileSystemWatcher.Renamed += updater;
+                this.fileSystemWatcher.Deleted += updater;
+                this.fileSystemWatcher.Created += updater;
+                this.fileSystemWatcher.EnableRaisingEvents = true;
+            }
 
             this.cryptAccess = cryptAccess;
 
