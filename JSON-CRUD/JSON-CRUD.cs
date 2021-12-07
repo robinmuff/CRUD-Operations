@@ -36,7 +36,7 @@ namespace JSON_CRUD
         {
             if (File.Exists(filename))
             {
-                FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
                 StreamReader sr = new StreamReader(fs);
                 string fileContent = sr.ReadToEnd();
                 sr.Close();
@@ -44,7 +44,7 @@ namespace JSON_CRUD
                 if (cryptAccess != null)
                 {
                     byte[] oFileBytes = null;
-                    using (FileStream nfs = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    using (FileStream nfs = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
                         int numBytesToRead = Convert.ToInt32(nfs.Length);
                         oFileBytes = new byte[(numBytesToRead)];
