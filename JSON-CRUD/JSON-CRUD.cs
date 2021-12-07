@@ -53,8 +53,22 @@ namespace JSON_CRUD
         {
             if (File.Exists(filename))
             {
-                string fileContent = File.ReadAllText(filename);
-                if (cryptAccess != null) { fileContent = DecryptBytes(File.ReadAllBytes(filename)); }
+                FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                StreamReader sr = new StreamReader(fs);
+                string fileContent = sr.ReadToEnd();
+                sr.Close();
+
+                if (cryptAccess != null)
+                {
+                    byte[] oFileBytes = null;
+                    using (FileStream nfs = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    {
+                        int numBytesToRead = Convert.ToInt32(nfs.Length);
+                        oFileBytes = new byte[(numBytesToRead)];
+                        nfs.Read(oFileBytes, 0, numBytesToRead);
+                    }
+                    fileContent = DecryptBytes(oFileBytes);
+                }
                 Set(JsonConvert.DeserializeObject<List<O>>(fileContent));
             }
         }
