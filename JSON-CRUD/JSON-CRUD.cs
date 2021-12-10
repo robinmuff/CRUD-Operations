@@ -52,7 +52,7 @@ namespace JSON_CRUD
                     }
                     fileContent = DecryptBytes(oFileBytes);
                 }
-                Set(JsonConvert.DeserializeObject<List<O>>(fileContent));
+                Set(JsonConvert.DeserializeObject<List<O>>(fileContent), false);
             }
         }
         private void safeList()
@@ -78,7 +78,7 @@ namespace JSON_CRUD
         }
 
         /* -- List Operations -- */
-        public void Set(List<O> list) { this.list = new ObservableCollection<O>(list); safeList(); }
+        public void Set(List<O> list, bool save = true) { this.list = new ObservableCollection<O>(list); if (save) { safeList(); } }
         public List<O> Get() { return new List<O>(list); }
         public void Add(O item) { list.Add(item); safeList(); }
         public void AddRange(List<O> items) { foreach (O item in items) { list.Add(item); } safeList(); }
