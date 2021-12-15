@@ -26,6 +26,7 @@ namespace JSON_CRUD
             this.filename = filename;
 
             this.cryptAccess = cryptAccess;
+            this.doCrypt = cryptAccess != null;
 
             list = new ObservableCollection<O>();
 
@@ -42,7 +43,7 @@ namespace JSON_CRUD
                 string fileContent = sr.ReadToEnd();
                 sr.Close();
 
-                if (cryptAccess != null && doCrypt)
+                if ((cryptAccess != null && doCrypt) || !isJsonValid(fileContent))
                 {
                     byte[] oFileBytes = null;
                     using (FileStream nfs = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -55,6 +56,14 @@ namespace JSON_CRUD
                 }
                 Set(JsonConvert.DeserializeObject<List<O>>(fileContent), false);
             }
+        }
+        private bool isJsonValid(string json)
+        {
+            try
+            {
+                JsonConvert.DeserializeObject<List<O>>(json);
+                return true;
+            } catch { return false; }
         }
         private void safeList()
         {

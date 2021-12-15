@@ -7,7 +7,7 @@
     <PackageProjectUrl>https://github.com/robinmuff/CRUD-Operations</PackageProjectUrl>
     <RepositoryUrl>https://github.com/robinmuff/CRUD-Operations</RepositoryUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.5.1</Version>
+    <Version>1.5.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
