@@ -17,6 +17,7 @@ namespace JSON_CRUD
         private ObservableCollection<O> list;
         private CryptAccess cryptAccess;
         public string filename { get; }
+        public bool doCrypt { get; set; }
 
         /* -- Contructor -- */
         public CRUD(string filename, CryptAccess cryptAccess = null)
@@ -41,7 +42,7 @@ namespace JSON_CRUD
                 string fileContent = sr.ReadToEnd();
                 sr.Close();
 
-                if (cryptAccess != null)
+                if (cryptAccess != null && doCrypt)
                 {
                     byte[] oFileBytes = null;
                     using (FileStream nfs = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -58,7 +59,7 @@ namespace JSON_CRUD
         private void safeList()
         {
             string fileContent = JsonConvert.SerializeObject(Get());
-            if (cryptAccess != null)
+            if (cryptAccess != null && doCrypt)
             {
                 File.WriteAllBytes(filename, EncryptBytes(Encoding.ASCII.GetBytes(fileContent)));
             }
