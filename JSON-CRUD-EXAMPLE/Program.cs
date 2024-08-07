@@ -17,15 +17,15 @@ namespace JSON_CRUD_EXAMPLE
             Console.WriteLine("WELCOME TO JSON CRUD. This is a project to save a list very easy to a json file and read automatically.\nFeel free to use this in your application, just give the credits to the public repo here.\n\n");
 
             /* Set used Variables */
-            Item itemMyName = new Item("My Name is: ", "Robin");
-            Item itemSourceCode = new Item("You can see all the code of: ", "JSON-CRUD");
-            Item itemDiffrentProject = new Item("You can see all the code of: ", "DIFFRENT Project");
+            Item itemMyName = new("My Name is: ", "Robin");
+            Item itemSourceCode = new("You can see all the code of: ", "JSON-CRUD");
+            Item itemDiffrentProject = new("You can see all the code of: ", "DIFFERENT Project");
 
             /* Set CRUD with file */
             itemList = new CRUD<Item>("items.json");
 
             /* Set an Change Listener */
-            itemList.AddChangeListener(changeListener);
+            itemList.AddChangeListener(ChangeListener);
 
             /* Do some actions, find instant changes in JSON */
             itemList.Add(itemMyName);
@@ -53,34 +53,34 @@ namespace JSON_CRUD_EXAMPLE
 
             /* Crypt List Edit */
             cryptList.Add(itemMyName);
-            printCryptList();
+            PrintCryptList();
             cryptList.Add(itemSourceCode);
-            printCryptList();
+            PrintCryptList();
             cryptList.Clear();
-            printCryptList();
+            PrintCryptList();
 
 
             Console.Read();
         }
 
-        static void printList()
+        static void PrintList()
         {
             Console.WriteLine("--> PRINT <--");
             Console.WriteLine(JsonConvert.SerializeObject(itemList.Get()));
             Console.WriteLine("-------------");
         }
-        static void printCryptList()
+        static void PrintCryptList()
         {
             Console.WriteLine("--> PRINT <--");
             Console.WriteLine(JsonConvert.SerializeObject(cryptList.Get()));
             Console.WriteLine("-------------");
         }
 
-        static void changeListener(object sender, NotifyCollectionChangedEventArgs e)
+        static void ChangeListener(object sender, NotifyCollectionChangedEventArgs e)
         {
             Console.WriteLine("NOTIFIED FOR CHANGE, print following...");
 
-            printList();
+            PrintList();
         }
     }
 }
