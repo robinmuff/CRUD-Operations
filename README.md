@@ -16,7 +16,7 @@ In [here](JSON-CRUD-EXAMPLE/Program.cs) you can find an example of how you can u
 
 ### Short Version
 ```c#
-CRUD<yourClass> itemList = new CRUD<yourClass>("yourFileName.json");
+CRUD<yourClass> itemList = new("yourFileName.json");
 ```
 With the following code you get the list: 
 ```c#
