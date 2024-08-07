@@ -11,25 +11,16 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Sleep for 30 seconds
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '30s'
-      - uses: oprypin/find-latest-tag@v1
-        with:
-          repository: robinmuff/CRUD-Operations  # The repository to scan.
-          releases-only: false
-        id: crud
       - name: Checkout code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
       - name: Create Release
         id: create_release
-        uses: actions/create-release@latest
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ steps.crud.outputs.tag }}
-          release_name: Release ${{ steps.crud.outputs.tag }}
-          body: |
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body:
           draft: false
           prerelease: false
