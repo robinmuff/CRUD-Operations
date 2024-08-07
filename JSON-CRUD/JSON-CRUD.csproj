@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>JSON_CRUD_.NET5</RootNamespace>
     <Description>https://github.com/robinmuff/CRUD-Operations/blob/main/README.md</Description>
     <PackageProjectUrl>https://github.com/robinmuff/CRUD-Operations</PackageProjectUrl>
     <RepositoryUrl>https://github.com/robinmuff/CRUD-Operations</RepositoryUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.5.1.1</Version>
+    <Version>1.6.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>

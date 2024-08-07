@@ -15,38 +15,36 @@ namespace JSON_CRUD
     {
         /* -- Global Vars -- */
         private ObservableCollection<O> list;
-        private CryptAccess cryptAccess;
-        public string filename { get; }
-        public bool doCrypt { get; set; }
+        private readonly CryptAccess cryptAccess;
+        public string Filename { get; }
+        public bool DoCrypt { get; set; }
 
         /* -- Contructor -- */
         public CRUD(string filename, CryptAccess cryptAccess = null)
         {
-            checkFilename(filename);
-            this.filename = filename;
-
+            CheckFilename(filename);
+            this.Filename = filename;
             this.cryptAccess = cryptAccess;
-            this.doCrypt = cryptAccess != null;
+            this.DoCrypt = cryptAccess != null;
+            this.list = [];
 
-            list = new ObservableCollection<O>();
-
-            readList();
+            ReadList();
         }
 
         /* -- File Operations -- */
-        public void readList()
+        public void ReadList()
         {
-            if (File.Exists(filename))
+            if (File.Exists(Filename))
             {
-                FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-                StreamReader sr = new StreamReader(fs);
+                FileStream fs = new(Filename, FileMode.Open, FileAccess.Read, FileShare.Read);
+                StreamReader sr = new(fs);
                 string fileContent = sr.ReadToEnd();
                 sr.Close();
 
-                if ((cryptAccess != null && doCrypt) || !isJsonValid(fileContent))
+                if ((cryptAccess != null && DoCrypt) || !IsJsonValid(fileContent))
                 {
                     byte[] oFileBytes = null;
-                    using (FileStream nfs = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    using (FileStream nfs = File.Open(Filename, FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
                         int numBytesToRead = Convert.ToInt32(nfs.Length);
                         oFileBytes = new byte[(numBytesToRead)];
@@ -57,43 +55,44 @@ namespace JSON_CRUD
                 Set(JsonConvert.DeserializeObject<List<O>>(fileContent), false);
             }
         }
-        private bool isJsonValid(string json)
+        private static bool IsJsonValid(string json)
         {
             try
             {
                 JsonConvert.DeserializeObject<List<O>>(json);
                 return true;
-            } catch { return false; }
+            }
+            catch { return false; }
         }
-        private void safeList()
+        private void SafeList()
         {
             string fileContent = JsonConvert.SerializeObject(Get());
-            if (cryptAccess != null && doCrypt)
+            if (cryptAccess != null && DoCrypt)
             {
-                File.WriteAllBytes(filename, EncryptBytes(Encoding.ASCII.GetBytes(fileContent)));
+                File.WriteAllBytes(Filename, EncryptBytes(Encoding.ASCII.GetBytes(fileContent)));
             }
             else
             {
-                File.WriteAllText(filename, fileContent);
+                File.WriteAllText(Filename, fileContent);
             }
         }
-        private void checkFilename(string filename)
+        private static void CheckFilename(string filename)
         {
             int lastIndex = filename.LastIndexOf('/');
 
-            if (lastIndex != -1 && !Directory.Exists(filename.Substring(0, lastIndex)))
+            if (lastIndex != -1 && !Directory.Exists(filename[..lastIndex]))
             {
                 throw new System.Exception("Filename isn't valid, check that the directory exist (File doesn't have to exist");
             }
         }
 
         /* -- List Operations -- */
-        public void Set(List<O> list, bool save = true) { this.list = new ObservableCollection<O>(list); if (save) { safeList(); } }
+        public void Set(List<O> list, bool save = true) { this.list = new ObservableCollection<O>(list); if (save) { SafeList(); } }
         public List<O> Get() { return new List<O>(list); }
-        public void Add(O item) { list.Add(item); safeList(); }
-        public void AddRange(List<O> items) { foreach (O item in items) { list.Add(item); } safeList(); }
-        public void Clear() { list.Clear(); safeList(); }
-        public void CopyTo(O[] array, int index) { list.CopyTo(array, index); safeList(); }
+        public void Add(O item) { list.Add(item); SafeList(); }
+        public void AddRange(List<O> items) { foreach (O item in items) { list.Add(item); } SafeList(); }
+        public void Clear() { list.Clear(); SafeList(); }
+        public void CopyTo(O[] array, int index) { list.CopyTo(array, index); SafeList(); }
         public bool Contains(O item) { return list.Contains(item); }
         public bool ContainsMultiple(List<O> items) { foreach (O item in items) { if (!list.Contains(item)) { return false; } } return true; }
         public int Count() { return list.Count; }
@@ -102,11 +101,11 @@ namespace JSON_CRUD
         public override int GetHashCode() { return list.GetHashCode(); }
         public int IndexOf(O item) { return list.IndexOf(item); }
         public List<int> IndexOfMultiple(List<O> items) { List<int> indexList = new List<int>(); foreach (O item in items) { indexList.Add(list.IndexOf(item)); } return indexList; }
-        public void Insert(int index, O item) { list.Insert(index, item); safeList(); }
-        public void Move(int oldIndex, int newIndex) { list.Move(oldIndex, newIndex); safeList(); }
-        public void Remove(O item) { list.Remove(item); safeList(); }
-        public void RemoveMultiple(List<O> items) { foreach (O item in items) { list.Remove(item); } safeList(); }
-        public void RemoveAt(int index) { list.RemoveAt(index); safeList(); }
+        public void Insert(int index, O item) { list.Insert(index, item); SafeList(); }
+        public void Move(int oldIndex, int newIndex) { list.Move(oldIndex, newIndex); SafeList(); }
+        public void Remove(O item) { list.Remove(item); SafeList(); }
+        public void RemoveMultiple(List<O> items) { foreach (O item in items) { list.Remove(item); } SafeList(); }
+        public void RemoveAt(int index) { list.RemoveAt(index); SafeList(); }
         public O GetO(int index) { return list[index]; }
         public string ItemToString(O item) { return list[list.IndexOf(item)].ToString(); }
         public override string ToString() { return list.ToString(); }
@@ -128,16 +127,15 @@ namespace JSON_CRUD
         /* -- Encrypt | Decrypt -- */
         public byte[] EncryptBytes(byte[] inputBytes)
         {
-            RijndaelManaged RijndaelCipher = new RijndaelManaged();
+            Aes aes = Aes.Create();
 
-            RijndaelCipher.Mode = CipherMode.CBC;
             byte[] salt = Encoding.ASCII.GetBytes(cryptAccess.saltRounds.ToString());
-            PasswordDeriveBytes password = new PasswordDeriveBytes(cryptAccess.password, salt, "SHA1", 2);
+            PasswordDeriveBytes password = new(cryptAccess.password, salt, "SHA1", 2);
 
-            ICryptoTransform Encryptor = RijndaelCipher.CreateEncryptor(password.GetBytes(32), password.GetBytes(16));
+            ICryptoTransform Encryptor = aes.CreateEncryptor(password.GetBytes(32), password.GetBytes(16));
 
-            MemoryStream memoryStream = new MemoryStream();
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, Encryptor, CryptoStreamMode.Write);
+            MemoryStream memoryStream = new();
+            CryptoStream cryptoStream = new(memoryStream, Encryptor, CryptoStreamMode.Write);
             cryptoStream.Write(inputBytes, 0, inputBytes.Length);
             cryptoStream.FlushFinalBlock();
             byte[] CipherBytes = memoryStream.ToArray();
@@ -148,23 +146,21 @@ namespace JSON_CRUD
             Encoding unicode = Encoding.Unicode;
             byte[] validationCode = unicode.GetBytes("1234567890");
 
-            return CipherBytes.Concat(validationCode).ToArray();
+            return [.. CipherBytes, .. validationCode];
         }
         public string DecryptBytes(byte[] encryptedBytes)
         {
-            encryptedBytes = encryptedBytes.Take(encryptedBytes.Count() - 20).ToArray();
+            Aes aes = Aes.Create();
 
-            string azurekey = "";
-            RijndaelManaged RijndaelCipher = new RijndaelManaged();
+            encryptedBytes = encryptedBytes.Take(encryptedBytes.Length - 20).ToArray();
 
-            RijndaelCipher.Mode = CipherMode.CBC;
             byte[] salt = Encoding.ASCII.GetBytes(cryptAccess.saltRounds.ToString());
-            PasswordDeriveBytes password = new PasswordDeriveBytes(cryptAccess.password, salt, "SHA1", 2);
+            PasswordDeriveBytes password = new(cryptAccess.password, salt, "SHA1", 2);
 
-            ICryptoTransform Decryptor = RijndaelCipher.CreateDecryptor(password.GetBytes(32), password.GetBytes(16));
+            ICryptoTransform Decryptor = aes.CreateDecryptor(password.GetBytes(32), password.GetBytes(16));
 
-            MemoryStream memoryStream = new MemoryStream(encryptedBytes);
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, Decryptor, CryptoStreamMode.Read);
+            MemoryStream memoryStream = new(encryptedBytes);
+            CryptoStream cryptoStream = new(memoryStream, Decryptor, CryptoStreamMode.Read);
             byte[] plainBytes = new byte[encryptedBytes.Length];
 
             try
@@ -176,7 +172,7 @@ namespace JSON_CRUD
             memoryStream.Close();
             cryptoStream.Close();
 
-            List<byte> finall = new List<byte>();
+            List<byte> finall = [];
             for (int i = 0; i < plainBytes.Length; i++)
             {
                 if (plainBytes[i] != 0)
@@ -184,8 +180,8 @@ namespace JSON_CRUD
                     finall.Add(plainBytes[i]);
                 }
             }
-            byte[] array = finall.ToArray();
-            azurekey = Encoding.ASCII.GetString(array);
+            byte[] array = [.. finall];
+            string azurekey = Encoding.ASCII.GetString(array);
             return azurekey;
         }
     }
